@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Plan {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  startDate   DateTime @db.Date
+  endDate     DateTime @db.Date
+  status      Status   @default(DRAFT)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workouts Workout[]
+  runs     Run[]
+
+  @@index([name])
+}
+
+model Workout {
+  id            String   @id @default(cuid())
+  planId        String
+  plan          Plan     @relation(fields: [planId], references: [id], onDelete: Cascade)
+  scheduledDate DateTime? @db.Date
+  distance      Decimal  @db.Decimal(5, 2)
+  targetPace    Int
+  workoutType   WorkoutType
+  description   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  runs Run[]
+
+  @@index([planId])
+  @@index([scheduledDate])
+}
+
+model Run {
+  id         String   @id @default(cuid())
+  planId     String
+  plan       Plan     @relation(fields: [planId], references: [id], onDelete: Cascade)
+  workoutId  String?
+  workout    Workout? @relation(fields: [workoutId], references: [id], onDelete: SetNull)
+  actualDate DateTime @db.Date
+  distance   Decimal  @db.Decimal(5, 2)
+  actualPace Int
+  source     Source   @default(MANUAL)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([planId])
+  @@index([actualDate])
+  @@index([workoutId])
+}
+
+enum Status {
+  DRAFT
+  ACTIVE
+  COMPLETED
+}
+
+enum WorkoutType {
+  EASY
+  TEMPO
+  LONG
+  SPEED
+  RECOVERY
+  CROSS_TRAINING
+  REST
+}
+
+enum Source {
+  MANUAL
+  STRAVA
+}
