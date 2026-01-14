@@ -6,7 +6,15 @@
       "Bash(npm install:*)",
       "Bash(npm test:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(ls:*)",
+      "Bash(npm run prisma:migrate:*)",
+      "Bash(export DATABASE_URL=\"sqlserver://sa:lazyDog5566oz@localhost:1433/running_trainer?encrypt=true&trustServerCertificate=true\")",
+      "Bash(npx prisma migrate:*)",
+      "Bash(npx dotenv:*)",
+      "Bash(timeout 30 npx prisma db push:*)",
+      "Bash(node -e:*)",
+      "Bash(dir:*)"
     ]
   }
 }

@@ -4,7 +4,7 @@
   "description": "Running Trainer MVP - Training plan microservice",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
     "test": "jest",

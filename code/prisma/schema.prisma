@@ -16,7 +16,7 @@ model Plan {
   description String?
   startDate   DateTime @db.Date
   endDate     DateTime @db.Date
-  status      Status   @default(DRAFT)
+  status      String   @default("DRAFT") // DRAFT, ACTIVE, or COMPLETED
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -33,7 +33,7 @@ model Workout {
   scheduledDate DateTime? @db.Date
   distance      Decimal  @db.Decimal(5, 2)
   targetPace    Int
-  workoutType   WorkoutType
+  workoutType   String   // EASY, TEMPO, LONG, SPEED, RECOVERY, CROSS_TRAINING, REST
   description   String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -47,13 +47,13 @@ model Workout {
 model Run {
   id         String   @id @default(cuid())
   planId     String
-  plan       Plan     @relation(fields: [planId], references: [id], onDelete: Cascade)
+  plan       Plan     @relation(fields: [planId], references: [id], onUpdate: NoAction, onDelete: NoAction)
   workoutId  String?
   workout    Workout? @relation(fields: [workoutId], references: [id], onDelete: SetNull)
   actualDate DateTime @db.Date
   distance   Decimal  @db.Decimal(5, 2)
   actualPace Int
-  source     Source   @default(MANUAL)
+  source     String   @default("MANUAL") // MANUAL or STRAVA
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
@@ -62,23 +62,9 @@ model Run {
   @@index([workoutId])
 }
 
-enum Status {
-  DRAFT
-  ACTIVE
-  COMPLETED
-}
-
-enum WorkoutType {
-  EASY
-  TEMPO
-  LONG
-  SPEED
-  RECOVERY
-  CROSS_TRAINING
-  REST
-}
-
-enum Source {
-  MANUAL
-  STRAVA
-}
+// Enum values for reference:
+// Status: DRAFT, ACTIVE, COMPLETED
+// WorkoutType: EASY, TEMPO, LONG, SPEED, RECOVERY, CROSS_TRAINING, REST
+// Source: MANUAL, STRAVA
+// Note: SQL Server doesn't support native enums, so these are stored as strings.
+// Validation happens at the application layer (Zod validators).
