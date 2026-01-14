@@ -14,7 +14,20 @@
       "Bash(npx dotenv:*)",
       "Bash(timeout 30 npx prisma db push:*)",
       "Bash(node -e:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(tree:*)",
+      "Bash(npx tailwindcss init -p)",
+      "Bash(npm exec:*)",
+      "Bash(npm run build:*)",
+      "Bash(grep:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "Bash(kill:*)",
+      "Bash(cmd /c \"taskkill /PID 8540 /F\")"
     ]
   }
 }
