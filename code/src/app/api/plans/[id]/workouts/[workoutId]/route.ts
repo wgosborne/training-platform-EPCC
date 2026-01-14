@@ -9,12 +9,12 @@ import { createRequestLogger } from '@/lib/utils/logger';
 const workoutService = new WorkoutService();
 
 export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string; workoutId: string } },
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string; workoutId: string }> },
 ) {
   const requestId = generateRequestId();
   const logger = createRequestLogger(requestId);
-  const { id: planId, workoutId } = params;
+  const { id: planId, workoutId } = await params;
 
   try {
     logger.info(`GET /api/plans/${planId}/workouts/${workoutId}`);
@@ -33,11 +33,11 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string; workoutId: string } },
+  { params }: { params: Promise<{ id: string; workoutId: string }> },
 ) {
   const requestId = generateRequestId();
   const logger = createRequestLogger(requestId);
-  const { id: planId, workoutId } = params;
+  const { id: planId, workoutId } = await params;
 
   try {
     logger.info(`PATCH /api/plans/${planId}/workouts/${workoutId}`);
@@ -75,12 +75,12 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string; workoutId: string } },
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string; workoutId: string }> },
 ) {
   const requestId = generateRequestId();
   const logger = createRequestLogger(requestId);
-  const { id: planId, workoutId } = params;
+  const { id: planId, workoutId } = await params;
 
   try {
     logger.info(`DELETE /api/plans/${planId}/workouts/${workoutId}`);

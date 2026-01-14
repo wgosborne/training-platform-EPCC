@@ -9,12 +9,12 @@ import { createRequestLogger } from '@/lib/utils/logger';
 const workoutService = new WorkoutService();
 
 export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } },
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const requestId = generateRequestId();
   const logger = createRequestLogger(requestId);
-  const { id: planId } = params;
+  const { id: planId } = await params;
 
   try {
     logger.info(`GET /api/plans/${planId}/workouts`);
@@ -33,11 +33,11 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const requestId = generateRequestId();
   const logger = createRequestLogger(requestId);
-  const { id: planId } = params;
+  const { id: planId } = await params;
 
   try {
     logger.info(`POST /api/plans/${planId}/workouts`);

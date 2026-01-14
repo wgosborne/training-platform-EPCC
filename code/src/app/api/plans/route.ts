@@ -8,7 +8,7 @@ import { createRequestLogger } from '@/lib/utils/logger';
 
 const planService = new PlanService();
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   const requestId = generateRequestId();
   const logger = createRequestLogger(requestId);
 
